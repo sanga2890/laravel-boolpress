@@ -8,13 +8,13 @@
                 <form action="{{ route('admin.posts.update', ['post' => $post_list->id]) }}" method="post">
                     @csrf
                     @method('PUT')
-                    <div class="form group">
+                    <div class="form-group">
                         <label for="title">Title</label>
-                        <input type="text" name="title" class="form-control" value="{{ old('title', $post_list->title) }}">
+                        <input type="text" name="title" class="form-control" id="title" value="{{ old('title', $post_list->title) }}">
                     </div>
                     <div class="form-group">
-                        <label for="text">Text</label>
-                        <textarea type="text" name="content" class="form-control" value="{{ old('content', $post_list->content) }}"></textarea>
+                        <label for="content">Text</label>
+                        <textarea type="text" name="content" class="form-control" id="text">{{ old('content', $post_list->content) }}</textarea>
                     </div>
                     <button type="submit" class="btn btn-primary">Add</button>
 

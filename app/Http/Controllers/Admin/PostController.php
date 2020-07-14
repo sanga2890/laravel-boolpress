@@ -100,9 +100,8 @@ class PostController extends Controller
         $data = $request->all();
         $slug = Str::of($data['title'])->slug('-')->__toString();
         $data['slug'] = $slug;
-        $new_post = new Post();
-        $new_post->update($data);
-        $new_post->save();
+        $post = Post::find($id);
+        $post->update($data);
         return redirect()->route('admin.posts.index');
     }
 
