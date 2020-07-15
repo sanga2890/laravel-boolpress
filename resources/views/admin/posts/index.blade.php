@@ -14,6 +14,7 @@
                             <th>Id</th>
                             <th>Title</th>
                             <th>Slug</th>
+                            <th>Categoria</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -23,6 +24,7 @@
                                 <td>{{ $post->id }}</td>
                                 <td>{{ $post->title }}</td>
                                 <td>{{ $post->slug }}</td>
+                                <td>{{ $post->category->name ?? '-' }}</td>
                                 <td>
                                     <a class="btn btn-info" href="{{ route('admin.posts.show', ['post' => $post->id]) }}">Info</a>
                                     <a class="btn btn-secondary" href="{{ route('admin.posts.edit', ['post' => $post->id]) }}">Edit</a>

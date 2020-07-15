@@ -10,6 +10,9 @@
                 <p><strong>slug: </strong>
                     {{ $post_list->slug }}
                 </p>
+                <p><strong>Category: </strong>
+                    {{ $post_list->category->name }}
+                </p>
                 <p><strong>Created at: </strong>
                     {{ $post_list->created_at }}
                 </p>
