@@ -44,6 +44,14 @@ class PostController extends Controller
         ]);
         $data = $request->all();
         $slug = Str::of($data['title'])->slug('-')->__toString();
+        $original_slug = $slug;
+        $referred_post = Post::where('slug', $slug)->first();
+        $counter = 0;
+        while($referred_post) {
+            $counter++;
+            $slug = $original_slug . '-' . $counter;
+            $referred_post = Post::where('slug', $slug)->first();
+        }
         $data['slug'] = $slug;
         $new_post = new Post();
         $new_post->fill($data);
@@ -99,6 +107,14 @@ class PostController extends Controller
         ]);
         $data = $request->all();
         $slug = Str::of($data['title'])->slug('-')->__toString();
+        $original_slug = $slug;
+        $referred_post = Post::where('slug', $slug)->first();
+        $counter = 0;
+        while($referred_post) {
+            $counter++;
+            $slug = $original_slug . '-' . $counter;
+            $referred_post = Post::where('slug', $slug)->first();
+        }
         $data['slug'] = $slug;
         $post = Post::find($id);
         $post->update($data);
