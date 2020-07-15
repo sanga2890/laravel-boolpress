@@ -88,7 +88,12 @@ class PostController extends Controller
     {
         $post = Post::find($id);
         if ($post) {
-            return view('admin.posts.edit', ['post_list' => $post]);
+            $categories = Category::all();
+            $data = [
+                'post_list' => $post,
+                'category_list' => $categories
+            ];
+            return view('admin.posts.edit', $data);
         } else {
             return abort('404');
         }

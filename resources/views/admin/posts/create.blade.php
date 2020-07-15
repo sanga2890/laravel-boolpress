@@ -21,9 +21,7 @@
                             <option value="">Select category</option>
                             @foreach ($category_list as $category)
                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
-
                             @endforeach
-
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Add</button>
