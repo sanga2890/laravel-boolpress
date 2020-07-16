@@ -13,6 +13,13 @@
                 <p><strong>Category: </strong>
                     {{ $post_list->category->name }}
                 </p>
+                <p><strong>Tags: </strong>
+                    @forelse ($post_list->tags as $tag)
+                        {{ $tag->name }}{{$loop->last ? '' : ', '}}
+                    @empty
+                        -
+                    @endforelse
+                </p>
                 <p><strong>Created at: </strong>
                     {{ $post_list->created_at }}
                 </p>

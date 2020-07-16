@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Post;
 use App\Category;
+use App\Tag;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -17,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        $posts = Post::with('category', 'tags')->get();
         return view('admin.posts.index', ['post_list' => $posts]);
     }
 
@@ -29,7 +30,12 @@ class PostController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.posts.create', ['category_list' => $categories]);
+        $tags = Tag::all();
+        $data = [
+            'category_list' => $categories,
+            'tags' => $tags
+        ];
+        return view('admin.posts.create', $data);
     }
 
     /**
@@ -58,6 +64,9 @@ class PostController extends Controller
         $new_post = new Post();
         $new_post->fill($data);
         $new_post->save();
+        if(!empty($data['tags'])) {
+            $new_post->tags()->sync($data['tag_id']);
+        }
         return redirect()->route('admin.posts.index');
     }
 
@@ -89,9 +98,11 @@ class PostController extends Controller
         $post = Post::find($id);
         if ($post) {
             $categories = Category::all();
+            $tags = Tag::all();
             $data = [
                 'post_list' => $post,
-                'category_list' => $categories
+                'category_list' => $categories,
+                'tags' => $tags
             ];
             return view('admin.posts.edit', $data);
         } else {
@@ -125,6 +136,11 @@ class PostController extends Controller
         $data['slug'] = $slug;
         $post = Post::find($id);
         $post->update($data);
+        if(!empty($data['tag_id'])) {
+            $post->tags()->sync($data['tag_id']);
+        } else {
+            $post->tags()->detach();
+        }
         return redirect()->route('admin.posts.index');
     }
 
