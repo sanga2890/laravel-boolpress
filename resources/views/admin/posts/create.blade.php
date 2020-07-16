@@ -5,6 +5,16 @@
         <div class="row">
             <div class="col-sm-12">
                 <h1>Create new post</h1>
+                @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+
+                    </div>
+                @endif
                 <form action="{{ route('admin.posts.store') }}" method="post">
                     @csrf
                     <div class="form-group">
@@ -20,7 +30,7 @@
                         <select class="form-control" name="category_id">
                             <option value="">Select category</option>
                             @foreach ($category_list as $category)
-                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                <option {{ old('category_id') == $category->id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
                             @endforeach
                         </select>
                     </div>
